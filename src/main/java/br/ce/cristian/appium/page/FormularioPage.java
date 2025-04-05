@@ -106,7 +106,7 @@ public class FormularioPage extends BasePage{
 	}
 	
 	public void confirmar() {
-		clicarNoElemento(By.xpath("//android.widget.Button[@text='OK']"));
+		clicarNoElemento(By.xpath("//android.widget.Button[@text='OK']")); 
 		
 	}
 	
