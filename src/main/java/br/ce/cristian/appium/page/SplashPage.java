@@ -14,8 +14,7 @@ public class SplashPage extends BasePage {
 	
 	
 	public boolean isTelaSplashVisivel() {
-		existeElementoPorTexto(By.xpath("//android.widget.TextView[@text='Splash!']"));
-		return true;
+		return existeElementoPorTexto(By.xpath("//android.widget.TextView[@text='Splash!']"));
 	}
 	
 	public String telaHome() {

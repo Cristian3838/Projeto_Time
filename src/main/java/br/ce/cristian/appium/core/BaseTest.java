@@ -14,7 +14,6 @@ import org.openqa.selenium.TakesScreenshot;
 //Comportamento para se reproduzir em todos os testes
 public class BaseTest {
 	
-	
 	@Rule
 	public TestName testeName = new TestName();
 
@@ -57,5 +56,5 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

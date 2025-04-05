@@ -1,6 +1,7 @@
 package br.ce.cristian.appium.testes;
 import org.junit.Before;
 import org.junit.Test;
+
 import br.ce.cristian.appium.core.BaseTest;
 import br.ce.cristian.appium.core.DriverFactory;
 import br.ce.cristian.appium.page.FormularioPage;
@@ -10,6 +11,7 @@ import io.appium.java_client.android.AndroidDriver;
 import junit.framework.Assert;
 
 public class FormularioTeste extends BaseTest{
+	
 	
 	//Variavel Global
 	private AndroidDriver<MobileElement> driver;
@@ -25,12 +27,11 @@ public class FormularioTeste extends BaseTest{
 		driver = DriverFactory.getdriver();
 	}
 	
-	
-	
 	//Formulário Teste, roteiro de teste e suas assertivas
 	@SuppressWarnings("deprecation")
 	@Test
 	public void preencheFormulario()  {	
+		
 		
 		//Escrever nome
         page.escreverNome("Cristian Jonas");
@@ -68,12 +69,12 @@ public class FormularioTeste extends BaseTest{
 		
 		//Clica no botão limpar
 		page.clicarBotaoLimpar();
-	
+			
 	}
 	
 	@Test
 	public void preencheFormularioDemorado(){	
-		
+				
 		//Escrever nome
         page.escreverNome("Cristian Jonas");
 		
@@ -87,7 +88,17 @@ public class FormularioTeste extends BaseTest{
 		//Verificar retorno após clicar no botão salvar
 		Assert.assertEquals("Nome: Cristian Jonas", page.checarNomeEscrito());
 		
+		
 	}
+	
+	@Test
+	public void deveInteragirComData() {
+		page.clicarPorData();
+		page.clicarNaData();
+		page.confirmar();
+		Assert.assertEquals("19/01/2000", page.verificaDataEscohida());
+	}
+
 	
 	
 

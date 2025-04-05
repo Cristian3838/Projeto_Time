@@ -18,7 +18,7 @@ import junit.framework.Assert;
 public class SplashTeste extends BaseTest {
 	
 	//Variavel Global
-		private AndroidDriver<MobileElement> driver;
+	private AndroidDriver<MobileElement> driver;
 		
 	//Instanciando as páginas
 	private MenuPage menu = new MenuPage();

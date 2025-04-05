@@ -95,5 +95,25 @@ public class FormularioPage extends BasePage{
 		
 	}
 	
+	public void clicarPorData() {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='01/01/2000']"));
+		
+	}
+	
+	public void clicarNaData() {
+		clicarNoElemento(By.xpath("//android.view.View[@text='19']"));
+		
+	}
+	
+	public void confirmar() {
+		clicarNoElemento(By.xpath("//android.widget.Button[@text='OK']"));
+		
+	}
+	
+	public String verificaDataEscohida() {
+		return obtertexto(By.xpath("//android.widget.TextView[@text='19/01/2000']"));
+	}
+	
+	
 	
 }

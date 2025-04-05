@@ -29,6 +29,11 @@ public class MenuPage extends BasePage{
 		
 	}
 
+	public void acessaAcorddion() {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='Accordion']"));
+		
+	}
+
 
 
 	
