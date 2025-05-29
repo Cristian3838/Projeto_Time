@@ -94,9 +94,9 @@ public class FormularioTeste extends BaseTest{
 	@Test
 	public void deveInteragirComData() {
 		page.clicarPorData();
-		page.clicarNaData();
-		page.confirmar();
-		Assert.assertEquals("19/01/2000", page.verificaDataEscohida());
+		page.clicarNaData("20");
+		page.confirmar("OK");
+		Assert.assertEquals("20/01/2000", page.verificaDataEscohida("20/01/2000"));
 	}
 
 	

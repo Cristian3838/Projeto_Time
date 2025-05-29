@@ -29,8 +29,8 @@ public class DriverFactory {
 			capabilities.setCapability("platformName", "Android");
 			capabilities.setCapability("deviceName", "emulator-5554");
 			capabilities.setCapability("automationName", "uiautomator2");
-			capabilities.setCapability(MobileCapabilityType.APP,"/home/cristian_ataliba/eclipse-workspace/CursoAppiumCast/src/main/resources/CTAppium_2_0 (4).apk");
-
+			capabilities.setCapability("appPackage", "com.ctappium"); 
+			capabilities.setCapability("appActivity", "com.ctappium.MainActivity"); 
 
 			// Inicializar o driver do Appium
 			 try {
