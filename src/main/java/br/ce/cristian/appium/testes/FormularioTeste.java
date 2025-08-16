@@ -99,7 +99,15 @@ public class FormularioTeste extends BaseTest{
 		Assert.assertEquals("20/01/2000", page.verificaDataEscohida("20/01/2000"));
 	}
 
-	
+	@Test
+	public void deveIntergirComTimePicker() {
+		page.deveClicaroNoTimePicker();
+		page.escolherHoraTimePicker("9");
+		page.escolherMinutosTimePicker();
+		page.clicarNosMinutos("40");
+		page.clicarNoBotaoOKTImePicker();
+		Assert.assertEquals("09:40", page.verificaTimePickerEsclhido("09:40"));
+	}
 	
 
 	

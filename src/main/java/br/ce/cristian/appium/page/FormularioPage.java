@@ -114,6 +114,30 @@ public class FormularioPage extends BasePage{
 		return obtertexto(By.xpath("//android.widget.TextView[@text='" + verifica + "']"));
 	}
 	
+	public void deveClicaroNoTimePicker() {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='09:00']"));
+	}
 	
+	public void escolherHoraTimePicker(String hora) {
+		clicarNoElemento(MobileBy.AccessibilityId(hora));
+		
+	}
+	
+	public void escolherMinutosTimePicker() {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='00']"));
+		
+	}
+	
+	public void clicarNosMinutos(String minutos) {
+		clicarNoElemento(MobileBy.AccessibilityId(minutos));
+	}
+	
+	public void clicarNoBotaoOKTImePicker() {
+		clicarNoElemento(By.xpath("//android.widget.Button[@text='OK']"));
+	}
+	
+	public String verificaTimePickerEsclhido(String verifica) {
+		return obtertexto(By.xpath("//android.widget.TextView[@text='" + verifica + "']"));
+	}
 	
 }
