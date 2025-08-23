@@ -1,6 +1,9 @@
 package br.ce.cristian.appium.page;
 
+import java.util.NoSuchElementException;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import br.ce.cristian.appium.core.BasePage;
 
@@ -29,12 +32,24 @@ public class AlertaPage extends BasePage {
 		return obtertexto(By.xpath("//android.widget.TextView[@text='Confirmado']"));
 	}
 
-	public void clicarBotaoSair() {
-		clicarNoElemento(By.xpath("//android.widget.Button[@text='SAIR']"));
+	public void clicarBotao(String texto ){
+		clicarNoElemento(By.xpath("//android.widget.Button[@text='" + texto + "']"));
 		
 	}
 	
+	public void clciarAlertaSimples(String texto) {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='" + texto +"']"));
+	}
 	
+	public void clicarForaCaixa(int x, int y) { 
+		tap(x, y );
+	}
 	
+	public boolean isTituloVisivel(String texto) {
+	 
+	      return existeElementoPorTexto(By.xpath("//android.widget.TextView[@text='"+ texto +"']"));
+	        
+	}
+
 
 }

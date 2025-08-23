@@ -60,10 +60,10 @@ public class FormularioTeste extends BaseTest{
 		Assert.assertFalse(page.aposClickSwitch());
 		
 		//Clicar no botão Salvar
-		page.clicarBotaoSalvar();
+		page.clicarBotaoSalvar("SALVAR");
 		
 		//Verificar retorno após clicar no botão salvar
-		Assert.assertEquals("Nome: Cristian Jonas", page.checarNomeEscrito());
+		Assert.assertEquals("Nome: Cristian Jonas", page.checarNomeEscrito("Nome: Cristian Jonas"));
 		Assert.assertEquals("Console: xone", page.checarConsoleEscrito());
 		Assert.assertEquals("Checkbox: Marcado", page.checarCheckMarcado());
 		
@@ -86,7 +86,7 @@ public class FormularioTeste extends BaseTest{
 		page.clicarBotaoSalvarDemorado();
 		
 		//Verificar retorno após clicar no botão salvar
-		Assert.assertEquals("Nome: Cristian Jonas", page.checarNomeEscrito());
+		Assert.assertEquals("Nome: Cristian Jonas", page.checarNomeEscrito("Nome: Cristian Jonas"));
 		
 		
 	}
@@ -109,6 +109,21 @@ public class FormularioTeste extends BaseTest{
 		Assert.assertEquals("09:40", page.verificaTimePickerEsclhido("09:40"));
 	}
 	
+	
+	@Test
+	public void deveInteragirComSeekBar() {
+		//Clicar no Seek Bar
+		page.clicarSeekBar(0.62);
+		
+		//Clicar no botão Salvar
+		page.clicarBotaoSalvar("SALVAR");
+
+		
+		//Obter valor do Seek Bar
+		Assert.assertEquals("Slider: 59", page.checarNomeEscrito("Slider: 59"));
+		
+		
+	}
 
 	
 }

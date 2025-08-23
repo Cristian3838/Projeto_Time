@@ -3,7 +3,9 @@ package br.ce.cristian.appium.page;
 import org.openqa.selenium.By;
 
 import br.ce.cristian.appium.core.BasePage;
+import br.ce.cristian.appium.core.DriverFactory;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
 
 //Formulario Page como localizar um elemento na tela e como interagir com eles usando o metodo da classe DSL
 public class FormularioPage extends BasePage{
@@ -69,13 +71,13 @@ public class FormularioPage extends BasePage{
 		return isCheckMarcado(By.xpath("//android.widget.Switch"));
 	}
 	
-	public void clicarBotaoSalvar() {
-		clicarNoElemento(By.xpath("//android.widget.TextView[@text='SALVAR']"));
+	public void clicarBotaoSalvar(String texto ) {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='" + texto + "']"));
 
 	}
 	
-	public String checarNomeEscrito() {
-		return obtertexto(By.xpath("//android.widget.TextView[@text='Nome: Cristian Jonas']"));
+	public String checarNomeEscrito(String texto) {
+		return obtertexto(By.xpath("//android.widget.TextView[@text='" + texto + "']"));
 	}
 	
 	public String checarConsoleEscrito() {
@@ -140,4 +142,17 @@ public class FormularioPage extends BasePage{
 		return obtertexto(By.xpath("//android.widget.TextView[@text='" + verifica + "']"));
 	}
 	
+	public void clicarSeekBar(double position) {
+		
+		int delta = 55;
+		MobileElement seek = DriverFactory.getdriver().findElement(MobileBy.AccessibilityId("slid"));
+		int y = seek.getLocation().y + (seek.getSize().height/2);
+		
+		
+		int xinicial = seek.getLocation().x + delta;
+		int x  = (int) ( xinicial+ ((seek.getSize().width -2*delta) * position));
+		
+		tap(x,y);
+		
+	}
 }

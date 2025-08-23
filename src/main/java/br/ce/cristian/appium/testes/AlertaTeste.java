@@ -15,35 +15,44 @@ public class AlertaTeste extends BaseTest {
 	private AndroidDriver<MobileElement> driver;
 	private MenuPage menu = new MenuPage();
 	private AlertaPage page = new AlertaPage();
-	
+
 	@Before
 	public void inicializaAppium() {
 		menu.acessarMenuAlerta();
 		driver = DriverFactory.getdriver();
 	}
-	
-	//Roteito de Testes
+
+	// Roteito de Testes
 	@SuppressWarnings("deprecation")
 	@Test
 	public void alertasDeConfirmacao() {
-		
-		//Clicar em alerta Confirm
+
+		// Clicar em alerta Confirm
 		page.clicarAlertaConfirm();
-		
-		//Verificar os textos
+
+		// Verificar os textos
 		Assert.assertEquals("Info", page.obterTituloTexto());
 		Assert.assertEquals("Confirma a operação?", page.frasePageModal1());
-		
-		//Confirmar alerta
+
+		// Confirmar alerta
 		page.clicarBotaoConfirm();
-		
-		//Verificar nova mensagem
+
+		// Verificar nova mensagem
 		Assert.assertEquals("Info", page.obterTituloTexto());
 		Assert.assertEquals("Confirmado", page.frasePageModal2());
-		
-		//Clicar em sair
-		page.clicarBotaoSair();
+
+		// Clicar em sair
+		page.clicarBotao("SAIR"); 
 	}
-	
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void deveConfirmarAlerta() {
+		page.clciarAlertaSimples("ALERTA SIMPLES");
+		page.clicarForaCaixa(98, 171);
+		
+		Assert.assertTrue("O título esperado não está visível na tela.",
+				page.isTituloVisivel("Pode clicar no OK ou fora da caixa para sair"));
+	}
 
 }
