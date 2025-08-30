@@ -145,13 +145,18 @@ public class FormularioPage extends BasePage{
 	public void clicarSeekBar(double position) {
 		
 		int delta = 55;
+		
+		//Achar o elemento para clicar
 		MobileElement seek = DriverFactory.getdriver().findElement(MobileBy.AccessibilityId("slid"));
+		
+		//Achar a posição do X
 		int y = seek.getLocation().y + (seek.getSize().height/2);
 		
-		
+		//Achar a posição do Y
 		int xinicial = seek.getLocation().x + delta;
 		int x  = (int) ( xinicial+ ((seek.getSize().width -2*delta) * position));
 		
+		//Ação de toque
 		tap(x,y);
 		
 	}
