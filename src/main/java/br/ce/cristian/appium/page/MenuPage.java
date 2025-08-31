@@ -36,5 +36,17 @@ public class MenuPage extends BasePage {
 		clicarNoElemento(By.xpath("//android.widget.TextView[@text='Cliques']"));
 
 	}
+	
+	public void clicaOpcaoEscondida(String texto) {
+		clicarNoElemento(By.xpath("//android.widget.TextView[@text='" + texto + "']"));
+	}
+	 
+	public String checarNomeEscrito(String texto) {
+		return obtertexto(By.xpath("//android.widget.TextView[@text='" + texto + "']"));
+	}
+	
+	public void clicarEmSair(String texto) {
+		clicarNoElemento(By.xpath("//android.widget.Button[@text='"+ texto + "']"));
+	}
 
 }
