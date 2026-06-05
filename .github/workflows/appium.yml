@@ -10,8 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+          sudo chown root:kvm /dev/kvm
+          sudo chmod 666 /dev/kvm
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -19,77 +25,40 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Install Maven Dependencies
-        run: mvn dependency:resolve
 
       - name: Install Appium
         run: |
           npm install -g appium
           appium driver install uiautomator2
-          appium -v
 
       - name: Run Emulator and Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 27
-          target: default
-          arch: x86
-          profile: Nexus 6
+          api-level: 29
+          arch: x86_64
+          profile: pixel
           force-avd-creation: true
           disable-animations: true
-          emulator-options: >
-            -no-window
-            -gpu swiftshader_indirect
-            -noaudio
-            -no-boot-anim
-            -wipe-data
-            -no-snapshot
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           script: |
-            echo "ADB Version"
-            adb version
-
-            echo "Waiting emulator..."
             adb wait-for-device
 
-            echo "Waiting Android boot..."
-            sleep 180
-
-            echo "Connected devices"
             adb devices
 
-            echo "Boot completed"
-            adb shell getprop sys.boot_completed || true
-
-            echo "Installing APK..."
             adb install -r apk/app-debug.apk
 
-            echo "Checking package..."
-            adb shell pm list packages | grep saulo || true
-
-            echo "Starting Appium..."
             appium --base-path /wd/hub > appium.log 2>&1 &
-            sleep 30
+            sleep 20
 
-            echo "Running tests..."
             mvn clean test
 
-      - name: Upload Appium Logs
+      - name: Upload Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: appium-logs
           path: appium.log
-
-      - name: Upload Test Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: |
-            target/surefire-reports
-            target/site
