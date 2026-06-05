@@ -13,7 +13,7 @@ import org.openqa.selenium.TakesScreenshot;
 
 //Comportamento para se reproduzir em todos os testes
 public class BaseTest {
-	
+
 	@Rule
 	public TestName testeName = new TestName();
 
@@ -24,19 +24,20 @@ public class BaseTest {
 
 	@After
 	public void tearDown() {
-		// Tirar uma screencShot pouco antes de resetar o APP
 		gerarScreenShot();
-		DriverFactory.getdriver().resetApp();// Reinicia o APP a cada teste executado
-	} 
-	
+
+		if (DriverFactory.getdriver() != null) {
+			DriverFactory.getdriver().quit();
+		}
+	}
 
 	// Metodo para tirar uma ScreenShot de uma tela
-	public void gerarScreenShot() { 
+	public void gerarScreenShot() {
 
 		File imagem = ((TakesScreenshot) DriverFactory.getdriver()).getScreenshotAs(OutputType.FILE);
 
 		try {
-			File absolutPath = new File("target/screenshots/"+testeName.getMethodName()+".png");
+			File absolutPath = new File("target/screenshots/" + testeName.getMethodName() + ".png");
 			FileUtils.copyFile(imagem, absolutPath);
 			System.out.println(absolutPath);
 
@@ -47,7 +48,7 @@ public class BaseTest {
 		}
 
 	}
-	
+
 	public void esperar(long tempo) {
 		try {
 			Thread.sleep(tempo);
@@ -56,5 +57,5 @@ public class BaseTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
