@@ -2,7 +2,7 @@ name: Appium Android Tests
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   android-test:
@@ -39,7 +39,13 @@ jobs:
           api-level: 30
           arch: x86_64
           profile: pixel
-          script: mvn clean test
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            adb wait-for-device
+            adb shell getprop sys.boot_completed
+            adb devices
+            mvn clean test
 
       - name: Upload Logs
         if: always()
