@@ -1,64 +1,64 @@
-name: Appium + Maven + Android Emulator
+name: Appium Android Tests
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
+    branches:
+      - main
 
 jobs:
-  test:
+  android-test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout do projeto
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # 2. Java (necessário para Maven + Android)
-      - name: Set up JDK 17
+      - name: Enable KVM
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+          sudo chown root:kvm /dev/kvm
+          sudo chmod 666 /dev/kvm
+
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      # 3. Cache Maven
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          node-version: 20
 
-      # 4. Build Maven (gera APK)
-      - name: Build with Maven
-        run: mvn clean package
-
-      # 5. Debug APK
-      - name: Find APK
-        run: find . -name "*.apk" || true
-
-      # 6. Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # 7. Criar Emulator
-      - name: Create AVD
+      - name: Install Appium
         run: |
-          echo "no" | avdmanager create avd -n test -k "system-images;android-29;default;x86_64" --device "pixel"
+          npm install -g appium
+          appium driver install uiautomator2
 
-      # 8. Start Emulator
-      - name: Start Emulator
-        run: |
-          emulator -avd test -no-window -no-audio -gpu swiftshader_indirect &
-          adb wait-for-device
-          adb shell input keyevent 82
+      - name: Run Emulator and Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          profile: pixel
+          force-avd-creation: true
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          script: |
+            adb wait-for-device
 
-      # 9. Instalar APK automaticamente (SEM erro de path)
-      - name: Install APK
-        run: |
-          APK_PATH=$(find . -name "*.apk" | head -n 1)
-          echo "APK encontrado: $APK_PATH"
-          adb install -r "$APK_PATH"
+            adb devices
 
-      # 10. Rodar Appium tests (se você tiver)
-      - name: Run Appium Tests
-        run: mvn test
+            adb install -r apk/app-debug.apk
+
+            appium --base-path /wd/hub > appium.log 2>&1 &
+            sleep 20
+
+            mvn clean test
+
+      - name: Upload Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-logs
+          path: appium.log
