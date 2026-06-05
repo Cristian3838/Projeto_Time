@@ -11,7 +11,6 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
-
 //Classe responsável para encontrar os seletores
 public class BasePage {
 
@@ -48,32 +47,15 @@ public class BasePage {
 	}
 
 	public void tap(int x, int y) {
-	    new TouchAction<>(getdriver())
-	        .tap(PointOption.point(x, y))
-	        .perform();
+		new TouchAction<>(getdriver()).tap(PointOption.point(x, y)).perform();
 	}
-	
-	public void scrollToText(double inicio,  double fim) {
-	   
-	    Dimension size = getdriver().manage().window().getSize();
-	    int x = size.width / 2;
-	    int start_y = (int) (size.height * inicio);
-	    int end_y = (int) (size.height * fim);
 
-	    
-	            new TouchAction<>(getdriver())
-	                .press(PointOption.point(x, start_y))
-	                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
-	                .moveTo(PointOption.point(x, end_y))
-	                .release()
-	                .perform(); 
-	            
-	}
-	   
-	public String obtertextoElemento(String texto , By by) {
+	
+
+	public String obtertextoElemento(String texto, By by) {
 
 		return getdriver().findElement(by).getText();
 	}
-	
+ 
 
 }

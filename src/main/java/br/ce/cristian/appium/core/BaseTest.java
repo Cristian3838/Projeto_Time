@@ -31,7 +31,7 @@ public class BaseTest {
 	
 
 	// Metodo para tirar uma ScreenShot de uma tela
-	public void gerarScreenShot() {
+	public void gerarScreenShot() { 
 
 		File imagem = ((TakesScreenshot) DriverFactory.getdriver()).getScreenshotAs(OutputType.FILE);
 

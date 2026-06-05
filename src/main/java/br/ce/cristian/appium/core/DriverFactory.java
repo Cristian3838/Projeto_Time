@@ -27,14 +27,14 @@ public class DriverFactory {
 			// Definir as capacidades desejadas 
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setCapability("platformName", "Android");
-			capabilities.setCapability("deviceName", "emulator-5554");
+			capabilities.setCapability("deviceName", "Android Emulator");
 			capabilities.setCapability("automationName", "uiautomator2");
-			capabilities.setCapability("appPackage", "com.ctappium"); 
-			capabilities.setCapability("appActivity", "com.ctappium.MainActivity"); 
+			capabilities.setCapability("appPackage", "com.saulo.timer"); 
+			capabilities.setCapability("appActivity", "com.saulo.timer.MainActivity"); 
 
 			// Inicializar o driver do Appium
 			 try {
-				driver = new AndroidDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+				driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
